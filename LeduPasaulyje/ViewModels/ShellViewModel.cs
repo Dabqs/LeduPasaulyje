@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LeduPasaulyje.ViewModels
 {
-   public class ShellViewModel : Screen
+   public class ShellViewModel : Conductor<object>
     {
     }
 }

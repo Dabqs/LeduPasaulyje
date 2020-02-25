@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using LeduPasaulyje.Models;
 using LeduPasaulyje.ViewModels;
 using System;
 using System.Collections.Generic;
