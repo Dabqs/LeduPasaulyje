@@ -8,15 +8,15 @@
         Title="ShellView" Height="900" Width="1200">
     <DockPanel>
         <Menu DockPanel.Dock="Top" FontSize="18">
-            <MenuItem Header="Sąskaita">
-                
+            <MenuItem Header="Sąskaita" x:Name="LoadInvoiceMenu">
             </MenuItem>
-            <MenuItem Header="Account">
-               
+            <MenuItem Header="Produktai" x:Name="LoadProductsMenu">
+            </MenuItem>
+            <MenuItem Header="Parduotuvės" x:Name="LoadStoresMenu">
             </MenuItem>
         </Menu>
         <Grid>
-            <ContentControl x:Name="ActivateItem" Margin="5"/>
+            <ContentControl x:Name="ActiveItem" Margin="5"/>
         </Grid>
     </DockPanel>
 </Window>

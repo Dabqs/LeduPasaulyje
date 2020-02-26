@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace LeduPasaulyje.ViewModels
 {
-    public class TestViewModel : Screen
+    public class StoresMenuViewModel: Screen
     {
-
     }
 }

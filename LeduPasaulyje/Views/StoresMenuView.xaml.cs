@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace LeduPasaulyje.Views
 {
     /// <summary>
-    /// Interaction logic for TestControl.xaml
+    /// Interaction logic for StoresMenuView.xaml
     /// </summary>
-    public partial class TestControl : UserControl
+    public partial class StoresMenuView : UserControl
     {
-        public TestControl()
+        public StoresMenuView()
         {
             InitializeComponent();
         }

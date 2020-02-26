@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace LeduPasaulyje.Views
 {
     /// <summary>
-    /// Interaction logic for FirstChildView.xaml
+    /// Interaction logic for InvoiceView.xaml
     /// </summary>
-    public partial class FirstChildView : UserControl
+    public partial class InvoiceView : UserControl
     {
-        public FirstChildView()
+        public InvoiceView()
         {
             InitializeComponent();
         }

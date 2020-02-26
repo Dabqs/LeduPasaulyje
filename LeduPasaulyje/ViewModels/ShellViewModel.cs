@@ -9,19 +9,27 @@ namespace LeduPasaulyje.ViewModels
 {
    public class ShellViewModel : Conductor<object>
     {
-        private FirstChildViewModel firstChildVM; 
-        public ShellViewModel(FirstChildViewModel firstChildVM)
+        private InvoiceViewModel invoiceViewModel;
+        private ProductsMenuViewModel productsMenuViewModel;
+        private StoresMenuViewModel storesMenuViewModel;
+        public ShellViewModel(InvoiceViewModel invoiceViewModel, ProductsMenuViewModel productsMenuViewModel, StoresMenuViewModel storesMenuViewModel)
         {
-            this.firstChildVM = firstChildVM;
-            ActivateItem(this.firstChildVM);
+            this.invoiceViewModel = invoiceViewModel;
+            this.productsMenuViewModel = productsMenuViewModel;
+            this.storesMenuViewModel = storesMenuViewModel;
+            ActivateItem(this.invoiceViewModel);
         }
-        public void LoadTestView()
+        public void LoadInvoiceMenu()
         {
-            ActivateItem(new TestViewModel());
+            ActivateItem(invoiceViewModel);
         }
-        public void LoadFirstChild()
+        public void LoadStoresMenu()
         {
-            ActivateItem(new FirstChildViewModel());
+            ActivateItem(storesMenuViewModel);
+        }
+        public void LoadProductsMenu()
+        {
+            ActivateItem(productsMenuViewModel);
         }
     }
 }
