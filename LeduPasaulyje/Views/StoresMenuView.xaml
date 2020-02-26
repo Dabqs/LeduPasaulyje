@@ -4,10 +4,59 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LeduPasaulyje.Views"
-             mc:Ignorable="d" Background="White"
+             mc:Ignorable="d" Background="White" FontSize="18"
              d:DesignHeight="875" d:DesignWidth="1200">
+    
     <Grid>
-        <TextBlock Text="Stores menu view" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!--Row 1-->
+        <TextBlock Text="Parduotuvių redagavimas" Grid.Row="1" Grid.Column="1" FontSize="30" Grid.ColumnSpan="5"  Margin="70"/>
+        <TextBlock Text="↓↓↓ Jeigu kursite naują, palikite tuščią ↓↓↓" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" FontSize="15" Margin="5"  VerticalAlignment="Bottom" />
+        <!--Row 2-->
+        <TextBlock Text="Pasirinkite parduotuvę:" Grid.Row="2" Grid.Column="1" Margin="5" HorizontalAlignment="Right"/>
+        <ComboBox x:Name="Products" Grid.Row="2" Grid.Column="2" Width="270" Margin="5" IsEditable="True" HorizontalAlignment="Left" />
+        <Button Content="Naikinti pasirinktą" Grid.Row="2" Grid.Column="3" Margin="5" Background="#FFC92D2D" Foreground="White" />
+        <TextBlock Text="(Šis mygtukas pašalins parduotuvę visam laikui)" Grid.Row="2" Grid.Column="4"  FontSize="15" VerticalAlignment="Center" />
+        <!--Row 3-->
+        <TextBlock Text="Rajonas" Grid.Row="3" Grid.Column="1" Margin="5" HorizontalAlignment="Right" />
+        <ComboBox x:Name="Kategirija" Grid.Row="3" Grid.Column="2" Width="270" Margin="5" HorizontalAlignment="Left"/>
+        <!--Row 4-->
+        <TextBlock Text="Pavadinimas" Grid.Row="4" Grid.Column="1" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="4" Grid.Column="2" Margin="5" />
+        <!--Row 5-->
+        <TextBlock Text="Įmonės kodas" Grid.Row="5" Grid.Column="1" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="5" Grid.Column="2" Margin="5"/>
+        <!--Row 6-->
+        <TextBlock Text="PVM kodas" Grid.Row="6" Grid.Column="1" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="6" Grid.Column="2" Margin="5"/>
+        <!--Row 7-->
+        <TextBlock Text="Adresas" Grid.Row="7" Grid.Column="1" Margin="5" HorizontalAlignment="Right"  />
+        <TextBox Grid.Row="7" Grid.Column="2" Margin="5" TextWrapping="Wrap" MaxWidth="270"/>
+        <!--Row 8-->
+        <Button Content="Išsaugoti" Grid.Row="8" Grid.Column="2" Margin="5" Foreground="White" Background="#FF4B9C77" Height="50" />
+        <!--Row 9-->
+        <Button Content="Išvalyti laukelius" Grid.Row="9" Grid.Column="2" Margin="5" />
+        <!--Row 10-->
+        <Button Content="Atšaukti" Grid.Row="10" Grid.Column="2" Margin="5" />
     </Grid>
 </UserControl>
