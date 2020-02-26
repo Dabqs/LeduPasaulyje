@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LeduPasaulyje.Views"
              mc:Ignorable="d" Background="White"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="875" d:DesignWidth="1200">
     <Grid>
         <TextBlock Text="Stores menu view" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 

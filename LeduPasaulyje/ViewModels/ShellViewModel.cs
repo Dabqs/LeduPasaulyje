@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using LeduPasaulyje.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace LeduPasaulyje.ViewModels
         private InvoiceViewModel invoiceViewModel;
         private ProductsMenuViewModel productsMenuViewModel;
         private StoresMenuViewModel storesMenuViewModel;
+        public int MyProperty { get; set; }
+
         public ShellViewModel(InvoiceViewModel invoiceViewModel, ProductsMenuViewModel productsMenuViewModel, StoresMenuViewModel storesMenuViewModel)
         {
             this.invoiceViewModel = invoiceViewModel;
