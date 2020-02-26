@@ -5,22 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LeduPasaulyje.Views"
         mc:Ignorable="d"
-        Title="ShellView" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="10" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10" />
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
-        </Grid.RowDefinitions>
-        <ContentControl Grid.Row="1" Grid.Column="1" />
-    </Grid>
+        Title="ShellView" Height="900" Width="1200">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" FontSize="18">
+            <MenuItem Header="Sąskaita">
+                
+            </MenuItem>
+            <MenuItem Header="Account">
+               
+            </MenuItem>
+        </Menu>
+        <Grid>
+            <ContentControl x:Name="ActivateItem" Margin="5"/>
+        </Grid>
+    </DockPanel>
 </Window>
