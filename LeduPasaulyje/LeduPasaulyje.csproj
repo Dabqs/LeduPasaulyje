@@ -71,10 +71,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\StoreRegions.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\ProductCategories.cs" />
-    <Compile Include="Models\Store.cs" />
+    <Compile Include="Enums\StoreRegions.cs" />
+    <Compile Include="Enums\ProductCategories.cs" />
     <Compile Include="ViewModels\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\ProductsMenuViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -120,7 +118,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\InvoiceView.xaml">
       <SubType>Designer</SubType>
@@ -138,6 +135,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LeduPasaulyjeData.Library\LeduPasaulyjeData.Library.csproj">
+      <Project>{2e2dcf95-393c-4c60-8335-f968dcaa32f4}</Project>
+      <Name>LeduPasaulyjeData.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
