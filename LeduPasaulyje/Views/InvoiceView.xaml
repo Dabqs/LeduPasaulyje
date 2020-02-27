@@ -31,7 +31,7 @@
                 <ComboBox x:Name="Parduotuve" Width="250" IsEditable="True" IsEnabled="False" Margin="5"/>
             </StackPanel>
             <Border BorderBrush="#FF232323" BorderThickness="1">
-                <TextBox Text="Asfasdfasdf" Width="250" Height="100"  TextWrapping="Wrap" AcceptsReturn="True" TextAlignment="Center" BorderBrush="#FFEEEEEE" />
+                <TextBox x:Name="SelectedProduct_Name" Width="250" Height="100"  TextWrapping="Wrap" AcceptsReturn="True" TextAlignment="Center" BorderBrush="#FFEEEEEE" />
             </Border>
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" Margin="5">
@@ -47,7 +47,23 @@
         <!--row 2-->
         <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" >
             <TextBlock Text="Ledai:" FontSize="20" Margin="0 0 5 0"/>
-            <ComboBox x:Name="Ledai" FontSize="20" IsEditable="True" Width="300"/>
+            <ComboBox ItemsSource="{Binding Products}" FontSize="16"
+                      IsEditable="True"
+                      SelectedItem="{Binding Selected,Mode=OneWay}"
+                      Width="300">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" Grid.Column="0" />
+                            <TextBlock Grid.Column="1" Text="{Binding Price,StringFormat=0.00€}" HorizontalAlignment="Right" />
+                        </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <Button x:Name="PasirinktiLeda" FontSize="20" Content="Pasirinkti" Margin="5 0 10 0" Padding="5 0 5 0"/>
             <TextBlock Text="Šaldyti produktai:" FontSize="20" Margin="70 0 5 0"/>
             <ComboBox x:Name="Saldyti" FontSize="20" IsEditable="True" Width="300"/>
@@ -73,13 +89,13 @@
                 <TextBox x:Name="Nuolaida" Text="5%" Width="50" TextAlignment="Center" Margin="5 0" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-            <StackPanel Orientation="Vertical" Margin="5" Width="140" HorizontalAlignment="Left">
-                <TextBlock Text="Suma be PVM:" TextAlignment="Right" />
-                <TextBlock Text="Nuolaida:" TextAlignment="Right"/>
-                <TextBlock Text="Suma po nuolaidos:" FontSize="15" TextAlignment="Right"/>
-                <TextBlock Text="PVM:" TextAlignment="Right"/>
-                <TextBlock Text="Galutinė suma:" FontWeight="Bold" TextAlignment="Right"/>
-            </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="5" Width="140" HorizontalAlignment="Left">
+                    <TextBlock Text="Suma be PVM:" TextAlignment="Right" />
+                    <TextBlock Text="Nuolaida:" TextAlignment="Right"/>
+                    <TextBlock Text="Suma po nuolaidos:" FontSize="15" TextAlignment="Right"/>
+                    <TextBlock Text="PVM:" TextAlignment="Right"/>
+                    <TextBlock Text="Galutinė suma:" FontWeight="Bold" TextAlignment="Right"/>
+                </StackPanel>
                 <StackPanel Margin="3 5" Width="140" HorizontalAlignment="Left">
                     <TextBlock Text="0" TextAlignment="Left" />
                     <TextBlock Text="0 %" TextAlignment="Left"/>
@@ -87,9 +103,9 @@
                     <TextBlock Text="0" TextAlignment="Left"/>
                     <TextBlock Text="0" FontWeight="Bold" TextAlignment="Left"/>
                 </StackPanel>
-                
+
             </StackPanel>
         </StackPanel>
-        
+
     </Grid>
 </UserControl>

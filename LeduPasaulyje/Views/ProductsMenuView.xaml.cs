@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeduPasaulyjeData.Library;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,12 @@ namespace LeduPasaulyje.Views
         public ProductsMenuView()
         {
             InitializeComponent();
+        }
+
+        private void BtnAtsauktiPasirinkima_Click(object sender, RoutedEventArgs e)
+        {
+            ProductsList.SelectedItem = null;
+
         }
     }
 }

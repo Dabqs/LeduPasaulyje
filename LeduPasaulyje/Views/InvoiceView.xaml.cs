@@ -20,9 +20,12 @@ namespace LeduPasaulyje.Views
     /// </summary>
     public partial class InvoiceView : UserControl
     {
+
         public InvoiceView()
         {
             InitializeComponent();
         }
+
+
     }
 }

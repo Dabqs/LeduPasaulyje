@@ -35,7 +35,6 @@ namespace LeduPasaulyjeData.Library
             }
 
         }
-        // TODO : implement this bellow
         private void EditProduct(ProductModel product, List<ProductModel> existingProducts)
         {
             int productIndex = existingProducts.IndexOf(GetMatchingProduct(product.Name,product.Category,existingProducts));
@@ -52,7 +51,7 @@ namespace LeduPasaulyjeData.Library
         {
             return existingProducts.Where(product => product.Name == name && product.Category == category).FirstOrDefault();
         }
-        private void AddProduct(ProductModel product)
+        public void AddProduct(ProductModel product)
         {
             JArray array = JArray.Parse(GetJsonString());
             JObject itemToAdd = new JObject();
