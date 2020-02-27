@@ -19,8 +19,7 @@ namespace LeduPasaulyje.ViewModels
 
         public ShellViewModel(InvoiceViewModel invoiceViewModel, ProductsMenuViewModel productsMenuViewModel, StoresMenuViewModel storesMenuViewModel)
         {
-            //Products = new BindableCollection<ProductModel>(productDataAccess.GetAllProducts());
-            //productDataAccess.AddProduct(new ProductModel(546887,ProductCategory.IceCream.ToString(),"Guliveris",29,0.60M));
+
             this.invoiceViewModel = invoiceViewModel;
             this.productsMenuViewModel = productsMenuViewModel;
             this.storesMenuViewModel = storesMenuViewModel;

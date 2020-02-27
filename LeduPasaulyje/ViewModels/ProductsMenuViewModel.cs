@@ -13,8 +13,10 @@ namespace LeduPasaulyje.ViewModels
     {
         ProductDataAccess dataAccess = new ProductDataAccess();
         public BindableCollection<ProductModel> Products { get; set; }
-        public BindableCollection<string> Categories { get; set; } = new BindableCollection<string>();
         private ProductModel selectedProduct;
+       
+   
+
 
         public ProductModel SelectedProduct
         {
@@ -31,10 +33,6 @@ namespace LeduPasaulyje.ViewModels
         public ProductsMenuViewModel()
         {
             Products = new BindableCollection<ProductModel>(dataAccess.GetAllProducts());
-           foreach (var item in Enum.GetValues(typeof(ProductCategory)))
-           {
-               Categories.Add(item.ToString());
-           }
         }
 
 

@@ -14,17 +14,6 @@ namespace LeduPasaulyje.ViewModels
         public BindableCollection<ProductModel> Products { get; set; }
         private ProductDataAccess productDataAccess = new ProductDataAccess();
         private ProductModel selectedProduct;
-        public string Selected { get
-            {
-                if (SelectedProduct != null)
-                {
-                return $"{SelectedProduct.Name}";
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            } }
 
 
 

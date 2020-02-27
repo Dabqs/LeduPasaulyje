@@ -8,12 +8,12 @@ namespace LeduPasaulyje.Models
 {
    public class ProductModel : IEquatable<ProductModel>
     {
-        public ulong Barcode { get; set; }
+        public string Barcode { get; set; }
         public string Category { get; set; }
         public string Name { get; set; }
         public uint AmountInBox { get; set; }
         public decimal Price { get; set; }
-        public ProductModel(ulong barcode, string category, string name, uint amountInBox, decimal price)
+        public ProductModel(string barcode, string category, string name, uint amountInBox, decimal price)
         {
             Barcode = barcode;
             Category = category;

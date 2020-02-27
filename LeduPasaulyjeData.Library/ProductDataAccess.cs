@@ -37,7 +37,7 @@ namespace LeduPasaulyjeData.Library
         }
         private void EditProduct(ProductModel product, List<ProductModel> existingProducts)
         {
-            int productIndex = existingProducts.IndexOf(GetMatchingProduct(product.Name,product.Category,existingProducts));
+            int productIndex = existingProducts.IndexOf(GetMatchingProduct(product.Name, product.Category, existingProducts));
             dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(GetJsonString());
             jsonObj[productIndex]["AmountInBox"] = product.AmountInBox;
             jsonObj[productIndex]["Price"] = product.Price;
@@ -51,6 +51,18 @@ namespace LeduPasaulyjeData.Library
         {
             return existingProducts.Where(product => product.Name == name && product.Category == category).FirstOrDefault();
         }
+
+        public void RemoveProduct(ProductModel product)
+        {
+            List<ProductModel> existingProducts = GetAllProducts();
+            if (IdenticalProductExists(product, existingProducts))
+            {
+                List<ProductModel> updatedProducts = existingProducts.Where(p => p.Name != product.Name || p.Category != product.Category).ToList();
+                string jsonOutput = JsonConvert.SerializeObject(updatedProducts, Formatting.Indented);
+                File.WriteAllText(productsJsonFilePath, jsonOutput);
+            }
+        }
+
         public void AddProduct(ProductModel product)
         {
             JArray array = JArray.Parse(GetJsonString());
