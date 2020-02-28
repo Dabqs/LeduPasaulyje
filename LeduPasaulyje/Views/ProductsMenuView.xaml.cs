@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,5 +26,10 @@ namespace LeduPasaulyje.Views
             InitializeComponent();
         }
 
+        private void SelectedProduct_AmountInBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (e.KeyboardDevice.IsKeyDown(Key.Tab))
+                ((TextBox)sender).SelectAll();
+        }
     }
 }

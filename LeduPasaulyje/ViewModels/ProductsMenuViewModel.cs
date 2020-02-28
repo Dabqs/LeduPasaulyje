@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using LeduPasaulyje.Commands;
 using LeduPasaulyje.Models;
 using LeduPasaulyjeData.Library;
 using LeduPasaulyjeData.Library.Models;
@@ -33,7 +34,10 @@ namespace LeduPasaulyje.ViewModels
             set
             {
                 selectedProduct = value;
+                if (value != null)
+                {
                 SelectedCategorien = value.SelectedCategory;
+                }
                 NotifyOfPropertyChange(() => SelectedProduct);
 
             }
@@ -50,9 +54,11 @@ namespace LeduPasaulyje.ViewModels
         }
         public ProductsMenuViewModel()
         {
-
+            NullifySelectedProduct = new NullifyObjectCommand(CleanAllFields);
             GetProducts();
-            selectedProduct = new ProductModel(0, new CategoryModel() { Category = "Šaldyti produktai" }, "Pasirinkite", 0, 0);
+            CleanAllFields();
+            //selectedProduct = new ProductModel(0, new CategoryModel() { Category = "Šaldyti produktai" }, "Pasirinkite", 0, 0);
+
         }
 
         private void GetProducts()
@@ -64,14 +70,53 @@ namespace LeduPasaulyje.ViewModels
             }
         }
 
-        public void AddAProduct()
+        public void UpdateProducts()
         {
-            ProductModel product = new ProductModel(SelectedProduct.Barcode, SelectedCategorien, SelectedProduct.Name, SelectedProduct.AmountInBox, SelectedProduct.Price);
+            ProductModel product = SelectedProduct;
+            SelectedProduct.SelectedCategory = SelectedCategorien;
+            try
+            {
+            productDataAccess.ValidateDataEntry(SelectedProduct);
+
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Įvyko netikėta klaida. Klaidos tekstas:'{ex.Message}'");
+                return;
+            }
             productDataAccess.UpdateProductsList(product);
             GetProducts();
-            selectedProduct = product;
+            SelectedProduct = product;
             MessageBox.Show("Išsaugota sėkmingai");
         }
 
+        public void CleanAllFields()
+        {
+            BindableCollection<ProductModel> tempProducts = Products;
+            selectedProduct = null;
+            Products = null;
+            Products = tempProducts;
+            SelectedProduct = new ProductModel(0, new CategoryModel() {Category = "--------" }, string.Empty, 0, 0);
+        }
+        public NullifyObjectCommand NullifySelectedProduct { get; private set; }
+
+        public void DeleteProduct()
+        {
+            if (MessageBox.Show("Ar tikrai norite panaikinti šį produktą? Jis bus ištrintas iš sąrašo visiems laikams.", "DĖMESIO!", MessageBoxButton.YesNo,
+                MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                if (SelectedProduct != null)
+                {
+                    productDataAccess.RemoveProduct(SelectedProduct);
+                    GetProducts();
+                    CleanAllFields();
+                }
+            }
+        }
     }
 }

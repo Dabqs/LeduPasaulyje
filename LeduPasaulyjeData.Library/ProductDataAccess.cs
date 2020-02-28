@@ -49,7 +49,7 @@ namespace LeduPasaulyjeData.Library
         }
         private ProductModel GetMatchingProduct(string name, string category, List<ProductModel> existingProducts)
         {
-            return existingProducts.Where(product => product.Name == name && product.SelectedCategory.Category == category).FirstOrDefault();
+            return existingProducts.Where(product => product.Name == name && product.SelectedCategory.Category.ToString() == category.ToString()).FirstOrDefault();
         }
 
         public void RemoveProduct(ProductModel product)
@@ -99,6 +99,47 @@ namespace LeduPasaulyjeData.Library
                     throw new Exception($"Nepavyko įkelti produktų. Patikrinkite, ar failas \"{productsJsonFilePath}\" nėra atidarytas. Jeigu yra, uždarykite jį.");
                 }
             }
+        }
+        public void ValidateDataEntry(ProductModel product)
+        {
+            //char systemDefaultDecimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            //decimal validatedPrice = 0;
+
+            if (product == null)
+            {
+                throw new ArgumentException("Suveskite visus prekės duomenis.");
+            }
+
+            if (product.SelectedCategory == null || product.SelectedCategory.Category.Contains("-"))
+            {
+                throw new ArgumentException("Pasirinkite kategoriją.");
+            }
+            if (string.IsNullOrWhiteSpace(product.Name))
+            {
+                throw new ArgumentException("Įveskite pavadinimą.");
+            }
+            if (product.AmountInBox == 0)
+            {
+                throw new ArgumentException("Įveskite kiekį.");
+            }
+            //if (!uint.TryParse(SelectedProduct_AmountInBox.Text, out uint temp))
+            //{
+            //    throw new ArgumentException("Pataisykite kiekį. Tai turi būti teigiamas sveikasis skaičius (be kablelių).");
+            //}
+            //if (string.IsNullOrWhiteSpace(SelectedProduct_Price.Text))
+            if (product.Price == 0)
+            {
+                throw new ArgumentException("Įveskite kainą.");
+            }
+            //try
+            //{
+            //    validatedPrice = Convert.ToDecimal(SelectedProduct_Price.Text.Replace('.', systemDefaultDecimalSeparator).Replace(',', systemDefaultDecimalSeparator));
+            //    SelectedProduct_Price.Text = validatedPrice.ToString("0.00");
+            //}
+            //catch (Exception)
+            //{
+            //    throw new Exception("Pataisykite kainą. Naudokite tik vieną kablelį ir veskite tik skaičius.");
+            //}
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LeduPasaulyje.Models
@@ -20,8 +21,7 @@ namespace LeduPasaulyje.Models
 
         public ProductModel(ulong barcode, CategoryModel category, string name, uint amountInBox, decimal price)
         {
-            Categories = new List<CategoryModel>() { new CategoryModel() { Category = "Ledai" }, new CategoryModel() { Category = "Šaldyti produktai" } };
-            //Categories = new List<CategoryModel>();
+            Categories = new List<CategoryModel>() { new CategoryModel() { Category = "--------" }, new CategoryModel() { Category = "Ledai" }, new CategoryModel() { Category = "Šaldyti produktai" } };
             Barcode = barcode;
             SelectedCategory = category;
             Name = name;
@@ -32,10 +32,12 @@ namespace LeduPasaulyje.Models
         public bool Equals(ProductModel other)
         {
             return Barcode == other.Barcode &&
-                //Category == other.Category && 
+                SelectedCategory.ToString() == other.SelectedCategory.ToString() && 
                 Name == other.Name &&
                 AmountInBox == other.AmountInBox &&
                 Price == other.Price;
         }
+        
+
     }
 }

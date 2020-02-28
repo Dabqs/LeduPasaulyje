@@ -71,6 +71,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\NullifyObjectCommand.cs" />
     <Compile Include="Enums\StoreRegions.cs" />
     <Compile Include="Enums\ProductCategories.cs" />
     <Compile Include="ViewModels\InvoiceViewModel.cs" />
