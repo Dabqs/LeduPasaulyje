@@ -37,7 +37,7 @@ namespace LeduPasaulyjeData.Library
         }
         private void EditProduct(ProductModel product, List<ProductModel> existingProducts)
         {
-            int productIndex = existingProducts.IndexOf(GetMatchingProduct(product.Name, product.Category, existingProducts));
+            int productIndex = existingProducts.IndexOf(GetMatchingProduct(product.Name, product.SelectedCategory.Category, existingProducts));
             dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(GetJsonString());
             jsonObj[productIndex]["AmountInBox"] = product.AmountInBox;
             jsonObj[productIndex]["Price"] = product.Price;
@@ -49,7 +49,7 @@ namespace LeduPasaulyjeData.Library
         }
         private ProductModel GetMatchingProduct(string name, string category, List<ProductModel> existingProducts)
         {
-            return existingProducts.Where(product => product.Name == name && product.Category == category).FirstOrDefault();
+            return existingProducts.Where(product => product.Name == name && product.SelectedCategory.Category == category).FirstOrDefault();
         }
 
         public void RemoveProduct(ProductModel product)
@@ -57,7 +57,7 @@ namespace LeduPasaulyjeData.Library
             List<ProductModel> existingProducts = GetAllProducts();
             if (IdenticalProductExists(product, existingProducts))
             {
-                List<ProductModel> updatedProducts = existingProducts.Where(p => p.Name != product.Name || p.Category != product.Category).ToList();
+                List<ProductModel> updatedProducts = existingProducts.Where(p => p.Name != product.Name || p.SelectedCategory.Category != product.SelectedCategory.Category).ToList();
                 string jsonOutput = JsonConvert.SerializeObject(updatedProducts, Formatting.Indented);
                 File.WriteAllText(productsJsonFilePath, jsonOutput);
             }
@@ -66,13 +66,8 @@ namespace LeduPasaulyjeData.Library
         public void AddProduct(ProductModel product)
         {
             JArray array = JArray.Parse(GetJsonString());
-            JObject itemToAdd = new JObject();
+            JObject itemToAdd = (JObject)JToken.FromObject(product);
 
-            itemToAdd["Category"] = product.Category;
-            itemToAdd["Name"] = product.Name;
-            itemToAdd["AmountInBox"] = product.AmountInBox;
-            itemToAdd["Price"] = product.Price;
-            itemToAdd["Barcode"] = product.Barcode;
             array.Add(itemToAdd);
 
             string jsonOutput = JsonConvert.SerializeObject(array, Formatting.Indented);
@@ -81,7 +76,7 @@ namespace LeduPasaulyjeData.Library
         private bool MatchingProductExists(ProductModel product, List<ProductModel> existingProducts)
         {
             //if matching product found, return true
-            return GetMatchingProduct(product.Name, product.Category, existingProducts) != null;
+            return GetMatchingProduct(product.Name, product.SelectedCategory.Category, existingProducts) != null;
         }
         private bool IdenticalProductExists(ProductModel product, List<ProductModel> existingProducts)
         {

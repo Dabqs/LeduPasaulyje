@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="ProductDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
