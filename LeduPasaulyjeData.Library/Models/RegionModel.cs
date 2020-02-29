@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeduPasaulyje.Models
+namespace LeduPasaulyjeData.Library.Models
 {
-enum ProductCategory
-        {
-            IceCream,
-            IcedProducts
-        }
+    public class RegionModel
+    {
+        public string Region { get; set; }
     }
-
+}

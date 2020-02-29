@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeduPasaulyje.Models
+namespace LeduPasaulyjeData.Library.Enums
 {
-    enum StoreRegions
+    enum AvailableRegions
     {
-        Utena,
         Anykščiai,
-        Rokiškis,
         Biržai,
         Molėtai_Ignalina_Švenčionys,
+        Rokiškis,
+        Utena,
         Zarasai
     }
 }

@@ -40,7 +40,5 @@ namespace LeduPasaulyje.Models
                 AmountInBox == other.AmountInBox &&
                 Price == other.Price;
         }
-        
-
     }
 }

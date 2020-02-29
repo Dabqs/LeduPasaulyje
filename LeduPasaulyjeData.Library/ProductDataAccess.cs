@@ -1,4 +1,5 @@
 ﻿using LeduPasaulyje.Models;
+using LeduPasaulyjeData.Library.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -13,10 +14,10 @@ namespace LeduPasaulyjeData.Library
 {
     public class ProductDataAccess
     {
-        readonly string productsJsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Products.json");
+        private readonly string productsJsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Products.json");
         public List<ProductModel> GetAllProducts()
         {
-            return JsonConvert.DeserializeObject<List<ProductModel>>(GetJsonString());
+            return JsonConvert.DeserializeObject<List<ProductModel>>(JsonHelpers.GetJsonString(productsJsonFilePath));
         }
 
         public void UpdateProductsList(ProductModel product)
@@ -34,12 +35,11 @@ namespace LeduPasaulyjeData.Library
                     AddProduct(product);
                 }
             }
-
         }
         private void EditProduct(ProductModel product, List<ProductModel> existingProducts)
         {
             int productIndex = existingProducts.IndexOf(GetMatchingProduct(product.Name, existingProducts));
-            dynamic jsonObj = JsonConvert.DeserializeObject(GetJsonString());
+            dynamic jsonObj = JsonConvert.DeserializeObject(JsonHelpers.GetJsonString(productsJsonFilePath));
             jsonObj[productIndex]["AmountInBox"] = product.AmountInBox;
             jsonObj[productIndex]["SelectedCategory"]["Category"] = product.SelectedCategory.Category;
             jsonObj[productIndex]["Price"] = product.Price;
@@ -59,7 +59,8 @@ namespace LeduPasaulyjeData.Library
             List<ProductModel> existingProducts = GetAllProducts();
             if (IdenticalProductExists(product, existingProducts))
             {
-                List<ProductModel> updatedProducts = existingProducts.Where(p => p.Name != product.Name || p.SelectedCategory.Category != product.SelectedCategory.Category).ToList();
+                List<ProductModel> updatedProducts = existingProducts.Where(p => p.Name.Trim().ToLower() != product.Name.Trim().ToLower()
+                || p.SelectedCategory.Category.Trim().ToLower() != product.SelectedCategory.Category.Trim().ToLower()).ToList();
                 string jsonOutput = JsonConvert.SerializeObject(updatedProducts, Formatting.Indented);
                 File.WriteAllText(productsJsonFilePath, jsonOutput);
             }
@@ -67,7 +68,7 @@ namespace LeduPasaulyjeData.Library
 
         public void AddProduct(ProductModel product)
         {
-            JArray array = JArray.Parse(GetJsonString());
+            JArray array = JArray.Parse(JsonHelpers.GetJsonString(productsJsonFilePath));
             JObject itemToAdd = (JObject)JToken.FromObject(product);
 
             array.Add(itemToAdd);
@@ -82,30 +83,13 @@ namespace LeduPasaulyjeData.Library
         }
         private bool IdenticalProductExists(ProductModel updatedProduct, List<ProductModel> existingProducts)
         {
-            bool result = existingProducts.Any(product => product.Name == updatedProduct.Name &&
-                                                product.Barcode == updatedProduct.Barcode &&
+            bool result = existingProducts.Any(product => product.Name.Trim().ToLower() == updatedProduct.Name.Trim().ToLower() &&
+                                                product.Barcode.Trim().ToLower() == updatedProduct.Barcode.Trim().ToLower() &&
                                                 product.Price == updatedProduct.Price &&
-                                                product.SelectedCategory.Category == updatedProduct.SelectedCategory.Category);
+                                                product.SelectedCategory.Category.Trim().ToLower() == updatedProduct.SelectedCategory.Category.Trim().ToLower());
             return result;
         }
-        private string GetJsonString()
-        {
-            try
-            {
-                return File.ReadAllText(productsJsonFilePath);
-            }
-            catch (Exception)
-            {
-                if (!File.Exists(productsJsonFilePath))
-                {
-                    throw new FileNotFoundException($"Nepavyko įkelti produktų. Failas \"{productsJsonFilePath}\" nerastas.");
-                }
-                else
-                {
-                    throw new Exception($"Nepavyko įkelti produktų. Patikrinkite, ar failas \"{productsJsonFilePath}\" nėra atidarytas. Jeigu yra, uždarykite jį.");
-                }
-            }
-        }
+
         public ProductModel ValidateDataEntry(ProductModel product)
         {
             char systemDefaultDecimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
