@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LeduPasaulyjeData.Library
@@ -37,9 +38,10 @@ namespace LeduPasaulyjeData.Library
         }
         private void EditProduct(ProductModel product, List<ProductModel> existingProducts)
         {
-            int productIndex = existingProducts.IndexOf(GetMatchingProduct(product.Name, product.SelectedCategory.Category, existingProducts));
-            dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(GetJsonString());
+            int productIndex = existingProducts.IndexOf(GetMatchingProduct(product.Name, existingProducts));
+            dynamic jsonObj = JsonConvert.DeserializeObject(GetJsonString());
             jsonObj[productIndex]["AmountInBox"] = product.AmountInBox;
+            jsonObj[productIndex]["SelectedCategory"]["Category"] = product.SelectedCategory.Category;
             jsonObj[productIndex]["Price"] = product.Price;
             jsonObj[productIndex]["Barcode"] = product.Barcode;
 
@@ -47,9 +49,9 @@ namespace LeduPasaulyjeData.Library
             File.WriteAllText(productsJsonFilePath, jsonOutput);
 
         }
-        private ProductModel GetMatchingProduct(string name, string category, List<ProductModel> existingProducts)
+        private ProductModel GetMatchingProduct(string name, List<ProductModel> existingProducts)
         {
-            return existingProducts.Where(product => product.Name == name && product.SelectedCategory.Category.ToString() == category.ToString()).FirstOrDefault();
+            return existingProducts.Where(product => product.Name == name).FirstOrDefault();
         }
 
         public void RemoveProduct(ProductModel product)
@@ -76,11 +78,15 @@ namespace LeduPasaulyjeData.Library
         private bool MatchingProductExists(ProductModel product, List<ProductModel> existingProducts)
         {
             //if matching product found, return true
-            return GetMatchingProduct(product.Name, product.SelectedCategory.Category, existingProducts) != null;
+            return GetMatchingProduct(product.Name, existingProducts) != null;
         }
-        private bool IdenticalProductExists(ProductModel product, List<ProductModel> existingProducts)
+        private bool IdenticalProductExists(ProductModel updatedProduct, List<ProductModel> existingProducts)
         {
-            return existingProducts.Contains(product);
+            bool result = existingProducts.Any(product => product.Name == updatedProduct.Name &&
+                                                product.Barcode == updatedProduct.Barcode &&
+                                                product.Price == updatedProduct.Price &&
+                                                product.SelectedCategory.Category == updatedProduct.SelectedCategory.Category);
+            return result;
         }
         private string GetJsonString()
         {
@@ -100,10 +106,10 @@ namespace LeduPasaulyjeData.Library
                 }
             }
         }
-        public void ValidateDataEntry(ProductModel product)
+        public ProductModel ValidateDataEntry(ProductModel product)
         {
-            //char systemDefaultDecimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            //decimal validatedPrice = 0;
+            char systemDefaultDecimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            decimal validatedPrice = 0;
 
             if (product == null)
             {
@@ -118,28 +124,43 @@ namespace LeduPasaulyjeData.Library
             {
                 throw new ArgumentException("Įveskite pavadinimą.");
             }
-            if (product.AmountInBox == 0)
+            #region numbers validation
+            //validate amount (must be UINT) ---- give user informative message
+
+            if (string.IsNullOrWhiteSpace(product.AmountInBox))
             {
                 throw new ArgumentException("Įveskite kiekį.");
             }
-            //if (!uint.TryParse(SelectedProduct_AmountInBox.Text, out uint temp))
-            //{
-            //    throw new ArgumentException("Pataisykite kiekį. Tai turi būti teigiamas sveikasis skaičius (be kablelių).");
-            //}
-            //if (string.IsNullOrWhiteSpace(SelectedProduct_Price.Text))
-            if (product.Price == 0)
+
+            if (!uint.TryParse(product.AmountInBox, out uint temp))
+            {
+                throw new ArgumentException("Pataisykite kiekį. Tai turi būti teigiamas sveikasis skaičius (be kablelių).");
+            }
+            else if(temp ==0)
+            {
+                throw new ArgumentException("Įveskite kiekį.");
+            }
+
+
+            if (string.IsNullOrWhiteSpace(product.Price))
             {
                 throw new ArgumentException("Įveskite kainą.");
             }
-            //try
-            //{
-            //    validatedPrice = Convert.ToDecimal(SelectedProduct_Price.Text.Replace('.', systemDefaultDecimalSeparator).Replace(',', systemDefaultDecimalSeparator));
-            //    SelectedProduct_Price.Text = validatedPrice.ToString("0.00");
-            //}
-            //catch (Exception)
-            //{
-            //    throw new Exception("Pataisykite kainą. Naudokite tik vieną kablelį ir veskite tik skaičius.");
-            //}
+            try
+            {
+                validatedPrice = Convert.ToDecimal(product.Price.Replace('.', systemDefaultDecimalSeparator).Replace(',', systemDefaultDecimalSeparator));
+                product.Price = validatedPrice.ToString("0.00");
+            }
+            catch (FormatException)
+            {
+                throw new ArgumentException("Pataisykite kainą. Naudokite tik vieną kablelį ir veskite tik skaičius.");
+            }
+            if (Convert.ToDecimal(product.Price) ==0)
+            {
+                throw new ArgumentException("Įveskite kainą.");
+            }
+            #endregion
+            return product;
         }
     }
 }

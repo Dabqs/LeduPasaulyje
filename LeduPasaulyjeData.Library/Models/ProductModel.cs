@@ -10,29 +10,32 @@ namespace LeduPasaulyje.Models
 {
     public class ProductModel : IEquatable<ProductModel>
     {
-        public ulong Barcode { get; set; }
+        //Choosing string because of the ease of entering values into TextBoxes (implemented custom validation)
+        public string Barcode { get; set; }
         // public string Category { get; set; }
         public string Name { get; set; }
-        public uint AmountInBox { get; set; }
-        public decimal Price { get; set; }
+        public string AmountInBox { get; set; }
+        public string Price { get; set; }
         public List<CategoryModel> Categories { get; set; }
         public CategoryModel SelectedCategory { get; set; }
+        private char systemDefaultDecimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+        private string validatedPrice;
 
-
-        public ProductModel(ulong barcode, CategoryModel category, string name, uint amountInBox, decimal price)
+        public ProductModel(string barcode, CategoryModel category, string name, string amountInBox, string price)
         {
-            Categories = new List<CategoryModel>() { new CategoryModel() { Category = "--------" }, new CategoryModel() { Category = "Ledai" }, new CategoryModel() { Category = "Šaldyti produktai" } };
+            validatedPrice = price.Replace('.', systemDefaultDecimalSeparator).Replace(',', systemDefaultDecimalSeparator); //if system has different decimal point than the development machine, this conversion makes sure that calculations will work correctly afterwards.
+            Price = validatedPrice;
+            Categories = new List<CategoryModel>() { new CategoryModel() { Category = "Ledai" }, new CategoryModel() { Category = "Šaldyti produktai" } };
             Barcode = barcode;
             SelectedCategory = category;
             Name = name;
             AmountInBox = amountInBox;
-            Price = price;
         }
 
         public bool Equals(ProductModel other)
         {
             return Barcode == other.Barcode &&
-                SelectedCategory.ToString() == other.SelectedCategory.ToString() && 
+                SelectedCategory.Category == other.SelectedCategory.Category && 
                 Name == other.Name &&
                 AmountInBox == other.AmountInBox &&
                 Price == other.Price;

@@ -72,11 +72,12 @@ namespace LeduPasaulyje.ViewModels
 
         public void UpdateProducts()
         {
-            ProductModel product = SelectedProduct;
+            ProductModel updatedProduct;
             SelectedProduct.SelectedCategory = SelectedCategorien;
+
             try
             {
-            productDataAccess.ValidateDataEntry(SelectedProduct);
+            updatedProduct = productDataAccess.ValidateDataEntry(SelectedProduct);
 
             }
             catch (ArgumentException ex)
@@ -89,10 +90,15 @@ namespace LeduPasaulyje.ViewModels
                 MessageBox.Show($"Įvyko netikėta klaida. Klaidos tekstas:'{ex.Message}'");
                 return;
             }
-            productDataAccess.UpdateProductsList(product);
+            productDataAccess.UpdateProductsList(updatedProduct);
             GetProducts();
-            SelectedProduct = product;
-            MessageBox.Show("Išsaugota sėkmingai");
+            CleanAllFields();
+            MessageBox.Show($"Išsaugota sėkmingai!\n\n" +
+                $"Kategorija: {updatedProduct.SelectedCategory.Category}\n" +
+                $"Pavadinimas: {updatedProduct.Name}\n" +
+                $"Kaina: {updatedProduct.Price}\n" +
+                $"Kiekis {updatedProduct.AmountInBox}\n" +
+                $"Prekės kodas: {updatedProduct.Barcode}");
         }
 
         public void CleanAllFields()
@@ -101,7 +107,7 @@ namespace LeduPasaulyje.ViewModels
             selectedProduct = null;
             Products = null;
             Products = tempProducts;
-            SelectedProduct = new ProductModel(0, new CategoryModel() {Category = "--------" }, string.Empty, 0, 0);
+            SelectedProduct = new ProductModel(string.Empty, new CategoryModel() {Category = "--------" }, string.Empty, string.Empty, string.Empty);
         }
         public NullifyObjectCommand NullifySelectedProduct { get; private set; }
 
