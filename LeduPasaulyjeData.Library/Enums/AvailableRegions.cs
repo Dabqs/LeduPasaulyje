@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeduPasaulyjeData.Library.Enums
 {
-    enum AvailableRegions
+   public enum AvailableRegions
     {
         Anykščiai,
         Biržai,

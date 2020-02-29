@@ -12,7 +12,7 @@ namespace LeduPasaulyjeData.Library.Models
         public string Name { get; set; }
         public string CompanyNumber { get; set; }
         public string VatNumber { get; set; }
-        public List<RegionModel> Regions { get; set; }
+        public List<RegionModel> Regions { get; set; } = new List<RegionModel>();
         public RegionModel SelectedRegion { get; set; }
 
         public StoreModel(string name, string companyNumber, string vatNumber, RegionModel selectedRegion)
