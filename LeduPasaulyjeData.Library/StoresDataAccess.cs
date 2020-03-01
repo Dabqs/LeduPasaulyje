@@ -51,8 +51,8 @@ namespace LeduPasaulyjeData.Library
         {
             bool result = existingStores.Any(store => store.Name == updatedStore.Name &&
                                                 store.CompanyNumber.Trim().ToLower() == updatedStore.CompanyNumber.Trim().ToLower() &&
-                                                store.VatNumber.Trim().ToLower() == updatedStore.VatNumber.Trim().ToLower() &&
-                                                store.SelectedRegion.Region.Trim().ToLower() == updatedStore.SelectedRegion.Region.Trim().ToLower());
+                                                store.VatNumber.Trim().ToLower() == updatedStore.VatNumber.Trim().ToLower());
+                                                //store.SelectedRegion.Region.Trim().ToLower() == updatedStore.SelectedRegion.Region.Trim().ToLower());
             return result;
         }
 
@@ -70,7 +70,7 @@ namespace LeduPasaulyjeData.Library
             int productIndex = existingStores.IndexOf(GetMatchingStore(store.Name, existingStores));
             dynamic jsonObj = JsonConvert.DeserializeObject(JsonHelpers.GetJsonString(storesJsonFilePath));
             jsonObj[productIndex]["CompanyNumber"] = store.CompanyNumber;
-            jsonObj[productIndex]["SelectedRegion"]["Region"] = store.SelectedRegion.Region; // TODO : create list of selected regions?
+           // jsonObj[productIndex]["SelectedRegion"]["Region"] = store.SelectedRegion.Region; // TODO : create list of selected regions?
             jsonObj[productIndex]["VatNumber"] = store.VatNumber;
 
             string jsonOutput = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);

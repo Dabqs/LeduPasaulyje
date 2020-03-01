@@ -9,5 +9,11 @@ namespace LeduPasaulyjeData.Library.Models
     public class RegionModel
     {
         public string Region { get; set; }
+        public bool IsSelected { get; set; }
+        public RegionModel(string region, bool isSelected = false)
+        {
+            Region = region;
+            IsSelected = isSelected;
+        }
     }
 }
