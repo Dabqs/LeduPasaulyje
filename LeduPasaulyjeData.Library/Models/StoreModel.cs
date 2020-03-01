@@ -19,28 +19,29 @@ namespace LeduPasaulyjeData.Library.Models
 
         public StoreModel(string name, string companyNumber, string vatNumber, string address, List<RegionModel> regions)
         {
-           // GetAvailableRegions();
             Name = name;
             Address = address;
             CompanyNumber = companyNumber;
             VatNumber = vatNumber;
             Regions = regions;
-            
-
         }
-       // private void GetAvailableRegions()
-       // {
-       //     foreach (var item in Enum.GetValues(typeof(AvailableRegions)))
-       //     {
-       //         availableRegions.Add(item.ToString());
-       //     }
-       // }
+
         public bool Equals(StoreModel other)
         {
-            return Name == other.Name &&
-                //SelectedRegion.Region == other.SelectedRegion.Region &&
-                CompanyNumber == other.CompanyNumber &&
-                VatNumber == other.VatNumber;
+            bool isEqual = false;
+            isEqual = Name.Trim().ToLower() == other.Name.Trim().ToLower() &&
+                CompanyNumber.Trim().ToLower() == other.CompanyNumber.Trim().ToLower() &&
+                VatNumber.Trim().ToLower() == other.VatNumber.Trim().ToLower() &&
+                Address.Trim().ToLower() == other.Address.Trim().ToLower() &&
+                Regions.Equals(other.Regions);
+                
+
+            //if (isEqual)
+            //{
+            //   
+            //}
+            return isEqual;
+
         }
     }
 }

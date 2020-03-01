@@ -64,7 +64,7 @@ namespace LeduPasaulyje.ViewModels
         private void GetProducts()
         {
             Products = new BindableCollection<ProductModel>();
-            foreach (ProductModel item in productDataAccess.GetAllProducts())
+            foreach (ProductModel item in productDataAccess.GetAllProducts().OrderBy(p => p.Name))
             {
                 products.Add(item);
             }

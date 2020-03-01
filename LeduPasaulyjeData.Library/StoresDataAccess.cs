@@ -13,7 +13,7 @@ namespace LeduPasaulyjeData.Library
 {
     public class StoresDataAccess
     {
-       private readonly string storesJsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Stores.json");
+        private readonly string storesJsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Stores.json");
 
         public List<StoreModel> GetAllStores()
         {
@@ -24,8 +24,6 @@ namespace LeduPasaulyjeData.Library
         {
             List<StoreModel> existingStores = GetAllStores();
 
-            if (!IdenticalStoreExists(store, existingStores))
-            {
                 if (MatchingStoreExists(store, existingStores))
                 {//Edit existing store
                     EditStore(store, existingStores);
@@ -34,7 +32,6 @@ namespace LeduPasaulyjeData.Library
                 {
                     AddStore(store);
                 }
-            }
         }
         public void AddStore(StoreModel store)
         {
@@ -46,19 +43,9 @@ namespace LeduPasaulyjeData.Library
             string jsonOutput = JsonConvert.SerializeObject(array, Formatting.Indented);
             File.WriteAllText(storesJsonFilePath, jsonOutput);
         }
-
-        private bool IdenticalStoreExists(StoreModel updatedStore, List<StoreModel> existingStores)
-        {
-            bool result = existingStores.Any(store => store.Name == updatedStore.Name &&
-                                                store.CompanyNumber.Trim().ToLower() == updatedStore.CompanyNumber.Trim().ToLower() &&
-                                                store.VatNumber.Trim().ToLower() == updatedStore.VatNumber.Trim().ToLower());
-                                                //store.SelectedRegion.Region.Trim().ToLower() == updatedStore.SelectedRegion.Region.Trim().ToLower());
-            return result;
-        }
-
         private bool MatchingStoreExists(StoreModel store, List<StoreModel> existingStores)
         {
-            //if matching product found, return true
+            //if matching store found, return true
             return GetMatchingStore(store.Name, existingStores) != null;
         }
         private StoreModel GetMatchingStore(string name, List<StoreModel> existingStores)
@@ -68,26 +55,25 @@ namespace LeduPasaulyjeData.Library
         private void EditStore(StoreModel store, List<StoreModel> existingStores)
         {
             int productIndex = existingStores.IndexOf(GetMatchingStore(store.Name, existingStores));
-            dynamic jsonObj = JsonConvert.DeserializeObject(JsonHelpers.GetJsonString(storesJsonFilePath));
-            jsonObj[productIndex]["CompanyNumber"] = store.CompanyNumber;
-           // jsonObj[productIndex]["SelectedRegion"]["Region"] = store.SelectedRegion.Region; // TODO : create list of selected regions?
-            jsonObj[productIndex]["VatNumber"] = store.VatNumber;
+            JArray array = JArray.Parse(JsonHelpers.GetJsonString(storesJsonFilePath));
+            array[productIndex].Remove();
+            JObject itemToAdd = (JObject)JToken.FromObject(store);
+            array.Add(itemToAdd);
 
-            string jsonOutput = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
+            string jsonOutput = JsonConvert.SerializeObject(array, Formatting.Indented);
             File.WriteAllText(storesJsonFilePath, jsonOutput);
 
         }
-        // TODO : 
-        //Implement!!!!
-      //  public void RemoveStore(StoreModel store)
-      //  {
-      //      List<StoreModel> existingStores = GetAllStores();
-      //      if (IdenticalStoreExists(store, existingStores))
-      //      {
-      //          List<StoreModel> updatedProducts = existingStores.Where(p => p.Name != store.Name || p.SelectedCategory.Category != store.SelectedCategory.Category).ToList();
-      //          string jsonOutput = JsonConvert.SerializeObject(updatedProducts, Formatting.Indented);
-      //          File.WriteAllText(productsJsonFilePath, jsonOutput);
-      //      }
-      //  }
+
+        public void RemoveStore(StoreModel store)
+        {
+            List<StoreModel> existingStores = GetAllStores();
+            if (MatchingStoreExists(store, existingStores))
+            {
+                List<StoreModel> updatedStores = existingStores.Where(existingStore => existingStore.Name != store.Name).ToList();
+                string jsonOutput = JsonConvert.SerializeObject(updatedStores, Formatting.Indented);
+                File.WriteAllText(storesJsonFilePath, jsonOutput);
+            }
+        }
     }
 }
