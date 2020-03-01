@@ -27,6 +27,8 @@ namespace LeduPasaulyje.ViewModels
         }
         public void LoadInvoiceMenu()
         {
+            invoiceViewModel.BuidIceCreamList();
+            invoiceViewModel.BuidIceCreamList();
             ActivateItem(invoiceViewModel);
         }
         public void LoadStoresMenu()

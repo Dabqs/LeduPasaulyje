@@ -48,7 +48,9 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Enums\AvailableRegions.cs" />
     <Compile Include="Helpers\JsonHelpers.cs" />
+    <Compile Include="InvoiceDataAccess.cs" />
     <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\InvoiceModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\RegionModel.cs" />
     <Compile Include="Models\RegionsSelection.cs" />

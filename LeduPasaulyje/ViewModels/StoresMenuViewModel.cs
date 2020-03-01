@@ -5,6 +5,7 @@ using LeduPasaulyjeData.Library.Enums;
 using LeduPasaulyjeData.Library.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace LeduPasaulyje.ViewModels
 {
     public class StoresMenuViewModel : Screen
     {
+
         private RegionModel activatedRegion;
 
         public RegionModel ActivatedRegion
