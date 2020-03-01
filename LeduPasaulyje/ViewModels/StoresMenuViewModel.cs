@@ -14,6 +14,19 @@ namespace LeduPasaulyje.ViewModels
 {
     public class StoresMenuViewModel : Screen
     {
+        private RegionModel activatedRegion;
+
+        public RegionModel ActivatedRegion
+        {
+            get { return activatedRegion; }
+            set
+            {
+                activatedRegion = value;
+                NotifyOfPropertyChange(() => ActivatedRegion);
+                NotifyOfPropertyChange(() => CanRemoveFromSelectedRegions);
+            }
+        }
+
         private BindableCollection<string> allRegions;
 
         public BindableCollection<string> AllRegions
@@ -38,7 +51,6 @@ namespace LeduPasaulyje.ViewModels
             }
         }
 
-
         private BindableCollection<RegionModel> selectedRegions;
 
         public BindableCollection<RegionModel> SelectedRegions
@@ -59,18 +71,9 @@ namespace LeduPasaulyje.ViewModels
                 BuildExistingRegions();
 
             }
-            // if (SelectedRegions== null)
-            // {
-            //     SelectedRegions = new BindableCollection<RegionModel>();
-            //     SelectedRegions.Add(new RegionModel(SelectedRegionName, true));
-            // }
-
-            // if (SelectedRegions.Any(r => r.Region != SelectedRegionName))
-            // {
             SelectedRegions.Add(new RegionModel(SelectedRegionName, true));
             ReloadSelectedStore();
             NotifyOfPropertyChange(() => CanAddToSelectedRegions);
-            // }
 
         }
 
@@ -79,8 +82,6 @@ namespace LeduPasaulyje.ViewModels
             get
             {
                 bool output = false;
-                //check if not all regions are already sent there
-                //if (SelectedRegions == null || (!string.IsNullOrWhiteSpace(SelectedRegionName) && !SelectedRegions.Any(r=> r.Region == SelectedRegionName)))
                 if (SelectedRegions == null || (!string.IsNullOrWhiteSpace(SelectedRegionName) && !SelectedRegions.Any(r => r.Region == SelectedRegionName)))
                 {
                     output = true;
@@ -93,14 +94,49 @@ namespace LeduPasaulyje.ViewModels
 
         public void RemoveFromSelectedRegions()
         {
+            RegionModel regionToRemove = SelectedRegions.FirstOrDefault(r => r.Region == ActivatedRegion.Region);
+            SelectedStore.Regions.Remove(regionToRemove);
+            //SelectedRegions.Remove(regionToRemove);
 
+            BuildExistingRegions();
+
+            // if (!string.IsNullOrWhiteSpace(SelectedRegionName))
+            // {
+            //     BuildExistingRegions();
+            //
+            // }
+            // SelectedRegions.Add(new RegionModel(SelectedRegionName, true));
+            ReloadSelectedStore();
+            NotifyOfPropertyChange(() => CanAddToSelectedRegions);
+            NotifyOfPropertyChange(() => CanRemoveFromSelectedRegions);
+
+        }
+        public void BuildExistingRegions()
+        {
+            if (SelectedStore != null)
+            {
+                List<RegionModel> existingSelectedRegions = new List<RegionModel>();
+                SelectedRegions = new BindableCollection<RegionModel>();
+                //buvo selectedstore.regions vietoj selected regions
+                existingSelectedRegions = SelectedStore.Regions.Where(r => r.IsSelected).ToList();
+
+                foreach (RegionModel existingRegion in existingSelectedRegions)
+                {
+                    SelectedRegions.Add(existingRegion);
+                }
+
+            }
         }
         public bool CanRemoveFromSelectedRegions
         {
             get
             {
                 bool output = false;
-                //check if there are any items
+                if (ActivatedRegion != null)
+                {
+                    output = true;
+
+                }
                 return output;
             }
         }
@@ -114,7 +150,18 @@ namespace LeduPasaulyje.ViewModels
             set
             {
                 selectedStore = value;
+                if (value != null)
+                {
+                    SelectedRegions = new BindableCollection<RegionModel>();
+                    foreach (RegionModel region in value.Regions.Where(r => r.IsSelected).OrderBy(r => r.Region))
+                    {
+                        SelectedRegions.Add(region);
+                    }
+
+                }
+
                 NotifyOfPropertyChange(() => SelectedStore);
+                NotifyOfPropertyChange(() => SelectedRegions);
                 BuildExistingRegions();
             }
         }
@@ -152,21 +199,7 @@ namespace LeduPasaulyje.ViewModels
             }
         }
 
-        public void BuildExistingRegions()
-        {
-            if (SelectedStore != null)
-            {
-                List<RegionModel> existingSelectedRegions = new List<RegionModel>();
-                SelectedRegions = new BindableCollection<RegionModel>();
-                existingSelectedRegions = SelectedStore.Regions.Where(r => r.IsSelected).ToList();
-
-                foreach (RegionModel existingRegion in existingSelectedRegions)
-                {
-                    SelectedRegions.Add(existingRegion);
-                }
-
-            }
-        }
+        
         public void ReloadSelectedStore()
         {
             List<RegionModel> updatedRegions = new List<RegionModel>();
@@ -234,14 +267,14 @@ namespace LeduPasaulyje.ViewModels
             storesDataAccess.UpdateStoresList(updatedStore);
             GetStores();
             CleanAllFields();
-            
 
-           MessageBox.Show($"Išsaugota sėkmingai!\n\n" +
-               $"Pavadinimas: {updatedStore.Name}\n" +
-               $"Rajonai:\n    - {String.Join("\n    - ", updatedStore.Regions.Where(r=> r.IsSelected).Select(r => r.Region))}\n" +
-               $"Įmonės kodas: {updatedStore.CompanyNumber}\n" +
-               $"PVM kodas {updatedStore.VatNumber}\n" +
-               $"Adresas: {updatedStore.Address}");
+
+            MessageBox.Show($"Išsaugota sėkmingai!\n\n" +
+                $"Pavadinimas: {updatedStore.Name}\n" +
+                $"Rajonai:\n    - {String.Join("\n    - ", updatedStore.Regions.Where(r => r.IsSelected).Select(r => r.Region))}\n" +
+                $"Įmonės kodas: {updatedStore.CompanyNumber}\n" +
+                $"PVM kodas {updatedStore.VatNumber}\n" +
+                $"Adresas: {updatedStore.Address}");
         }
 
 

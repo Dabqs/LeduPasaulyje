@@ -22,9 +22,7 @@ namespace LeduPasaulyje.ViewModels
             set
             {
                 selectedCategorien = value;
-                // SelectedProduct.SelectedCategory = value;
                 NotifyOfPropertyChange(() => SelectedCategorien);
-
             }
         }
         private ProductModel selectedProduct;
@@ -57,8 +55,6 @@ namespace LeduPasaulyje.ViewModels
             NullifySelectedProduct = new NullifyObjectCommand(CleanAllFields);
             GetProducts();
             CleanAllFields();
-            //selectedProduct = new ProductModel(0, new CategoryModel() { Category = "Šaldyti produktai" }, "Pasirinkite", 0, 0);
-
         }
 
         private void GetProducts()

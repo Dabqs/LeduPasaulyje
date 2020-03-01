@@ -45,7 +45,7 @@
         <Button Command="{Binding NullifySelectedStore}" VerticalAlignment="Top" Content="Atšaukti pasirinkimą" Grid.Row="2" Grid.Column="3" Margin="5" />
         <!--Row 3-->
         <TextBlock Text="Pasirinkti rajonai" Grid.Row="3" Grid.Column="1" Margin="5" HorizontalAlignment="Right" />
-        <ListBox x:Name="SelectedRegions" Margin="5" Grid.Row="3" Grid.Column="2">
+        <ListBox x:Name="SelectedRegions" SelectedItem="{Binding ActivatedRegion}" Margin="5" Grid.Row="3" Grid.Column="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical" >
@@ -65,8 +65,8 @@
             </ItemsControl.ItemsPanel>
         </ListBox>
         <StackPanel Grid.Row="3" Grid.Column="3" Orientation="Vertical">
-            <Button x:Name="AddToSelectedRegions" Content="&lt;--- Pridėti prie rajonų" FontSize="15" Margin="5"/>
-            <Button x:Name="RemoveFromSelectedRegions" Content="Pašalinti pasirinktą --->" FontSize="15" Margin="5"/>
+            <Button x:Name="AddToSelectedRegions" Content="&lt;--- Pridėti prie rajonų" FontSize="15" Margin="5" Background="#FFE5FFE6"/>
+            <Button x:Name="RemoveFromSelectedRegions" Content="Pašalinti pasirinktą --->" FontSize="15" Margin="5" Background="#FFFFE1E1"/>
         </StackPanel>
         <!--Row 4-->
         <TextBlock Text="Pavadinimas" Grid.Row="4" Grid.Column="1" Margin="5" HorizontalAlignment="Right"/>
