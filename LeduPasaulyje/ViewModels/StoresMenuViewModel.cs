@@ -69,7 +69,6 @@ namespace LeduPasaulyje.ViewModels
             if (!string.IsNullOrWhiteSpace(SelectedRegionName))
             {
                 BuildExistingRegions();
-
             }
             SelectedRegions.Add(new RegionModel(SelectedRegionName, true));
             ReloadSelectedStore();
@@ -85,7 +84,6 @@ namespace LeduPasaulyje.ViewModels
                 if (SelectedRegions == null || (!string.IsNullOrWhiteSpace(SelectedRegionName) && !SelectedRegions.Any(r => r.Region == SelectedRegionName)))
                 {
                     output = true;
-
                 }
                 return output;
             }
@@ -96,16 +94,8 @@ namespace LeduPasaulyje.ViewModels
         {
             RegionModel regionToRemove = SelectedRegions.FirstOrDefault(r => r.Region == ActivatedRegion.Region);
             SelectedStore.Regions.Remove(regionToRemove);
-            //SelectedRegions.Remove(regionToRemove);
 
             BuildExistingRegions();
-
-            // if (!string.IsNullOrWhiteSpace(SelectedRegionName))
-            // {
-            //     BuildExistingRegions();
-            //
-            // }
-            // SelectedRegions.Add(new RegionModel(SelectedRegionName, true));
             ReloadSelectedStore();
             NotifyOfPropertyChange(() => CanAddToSelectedRegions);
             NotifyOfPropertyChange(() => CanRemoveFromSelectedRegions);
@@ -117,14 +107,12 @@ namespace LeduPasaulyje.ViewModels
             {
                 List<RegionModel> existingSelectedRegions = new List<RegionModel>();
                 SelectedRegions = new BindableCollection<RegionModel>();
-                //buvo selectedstore.regions vietoj selected regions
                 existingSelectedRegions = SelectedStore.Regions.Where(r => r.IsSelected).ToList();
 
                 foreach (RegionModel existingRegion in existingSelectedRegions)
                 {
                     SelectedRegions.Add(existingRegion);
                 }
-
             }
         }
         public bool CanRemoveFromSelectedRegions
@@ -141,8 +129,6 @@ namespace LeduPasaulyje.ViewModels
             }
         }
 
-
-
         private StoreModel selectedStore;
         public StoreModel SelectedStore
         {
@@ -157,9 +143,8 @@ namespace LeduPasaulyje.ViewModels
                     {
                         SelectedRegions.Add(region);
                     }
-
                 }
-
+                
                 NotifyOfPropertyChange(() => SelectedStore);
                 NotifyOfPropertyChange(() => SelectedRegions);
                 BuildExistingRegions();
@@ -182,11 +167,7 @@ namespace LeduPasaulyje.ViewModels
         {
             NullifySelectedStore = new NullifyObjectCommand(CleanAllFields);
             BuildAllRegions();
-            //SelectedReg.Add(new KeyValuePair<string, bool>( "Utena", false));
-            // storesDataAccess.AddStore(new StoreModel("Darola", "5564654", "LT-465464","Girulių g 5, LT-154487, Rokiškis", "Rokiškis"));
-            // SelectedStore = new StoreModel(string.Empty, string.Empty, string.Empty, string.Empty);
             GetStores();
-            //SelectedStore = Stores.First();
             SelectedStore = null;
             SelectedStore = new StoreModel(string.Empty, string.Empty, string.Empty, string.Empty, new List<RegionModel>());
         }
@@ -249,21 +230,22 @@ namespace LeduPasaulyje.ViewModels
                 SelectedStore.Regions.Add(new RegionModel(regionName, isSelected));
             }
 
-            //try
-            //{
-            //    updatedStore = storesDataAccess.ValidateDataEntry(SelectedProduct);
-            //
-            //}
-            //catch (ArgumentException ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //    return;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Įvyko netikėta klaida. Klaidos tekstas:'{ex.Message}'");
-            //    return;
-            //}
+            try
+            {
+                updatedStore = storesDataAccess.ValidateDataEntry(SelectedStore);
+            
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Įvyko netikėta klaida. Klaidos tekstas:'{ex.Message}'");
+                return;
+            }
+
             storesDataAccess.UpdateStoresList(updatedStore);
             GetStores();
             CleanAllFields();

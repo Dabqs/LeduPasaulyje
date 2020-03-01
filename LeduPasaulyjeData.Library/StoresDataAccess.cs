@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LeduPasaulyjeData.Library
@@ -62,7 +63,6 @@ namespace LeduPasaulyjeData.Library
 
             string jsonOutput = JsonConvert.SerializeObject(array, Formatting.Indented);
             File.WriteAllText(storesJsonFilePath, jsonOutput);
-
         }
 
         public void RemoveStore(StoreModel store)
@@ -74,6 +74,37 @@ namespace LeduPasaulyjeData.Library
                 string jsonOutput = JsonConvert.SerializeObject(updatedStores, Formatting.Indented);
                 File.WriteAllText(storesJsonFilePath, jsonOutput);
             }
+        }
+
+        public StoreModel ValidateDataEntry(StoreModel store)
+        {
+            // - Vat code is optional
+            if (store == null)
+            {
+                throw new ArgumentException("Suveskite visus prekės duomenis.");
+            }
+
+            if (!store.Regions.Any(r => r.IsSelected))
+            {
+                throw new ArgumentException("Pasirinkite nors vieną rajoną.");
+            }
+            if (string.IsNullOrWhiteSpace(store.Name))
+            {
+                throw new ArgumentException("Įveskite pavadinimą.");
+            }
+            if (String.IsNullOrWhiteSpace(store.CompanyNumber))
+            {
+                throw new ArgumentException("Įveskite įmonės kodą.");
+            }
+            if (String.IsNullOrWhiteSpace(store.CompanyNumber))
+            {
+                throw new ArgumentException("Įveskite įmonės kodą.");
+            }
+            if (String.IsNullOrWhiteSpace(store.Address))
+            {
+                throw new ArgumentException("Įveskite adresą.");
+            }
+            return store;
         }
     }
 }
