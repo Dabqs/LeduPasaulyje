@@ -5,6 +5,7 @@ using LeduPasaulyjeData.Library.Enums;
 using LeduPasaulyjeData.Library.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,9 @@ namespace LeduPasaulyje.ViewModels
         public BindableCollection<StoreModel> AllStores
         {
             get { return allStores; }
-            set { allStores = value;
+            set
+            {
+                allStores = value;
                 NotifyOfPropertyChange(() => AllStores);
             }
         }
@@ -46,6 +49,14 @@ namespace LeduPasaulyje.ViewModels
 
         }
 
+        private DataTable invoiceDt;
+        public DataTable InvoiceDt
+        {
+            get
+            {
+                return invoiceDt;
+            }
+        }
 
         private BindableCollection<StoreModel> filteredStoresList;
 
@@ -64,7 +75,9 @@ namespace LeduPasaulyje.ViewModels
         public StoreModel SelectedStore
         {
             get { return selectedStore; }
-            set { selectedStore = value;
+            set
+            {
+                selectedStore = value;
                 NotifyOfPropertyChange(() => SelectedStore);
             }
         }
@@ -133,7 +146,7 @@ namespace LeduPasaulyje.ViewModels
             }
         }
 
-        public void BuidIcedProductsList()
+        public void BuildIcedProductsList()
         {
             IcedProductsList = new BindableCollection<ProductModel>();
             foreach (ProductModel product in productDataAccess.GetAllProducts().Where(p => p.SelectedCategory.Category == "Šaldyti produktai"))
@@ -166,6 +179,15 @@ namespace LeduPasaulyje.ViewModels
 
         }
 
+        public void CleanInvoiceFields()
+        {
+            ResetDate();
+            InitDataTable();
+            GetAllStores();
+            BuildAllRegions();
+
+        }
+
         public void ResetDate()
         {
             InvoiceDate = DateTime.Now;
@@ -191,16 +213,140 @@ namespace LeduPasaulyje.ViewModels
                 AllRegions.Add(item.ToString());
             }
         }
+        private ProductModel selectedIcedProduct;
+
+        public ProductModel SelectedIcedProduct
+        {
+            get { return selectedIcedProduct; }
+            set
+            {
+                selectedIcedProduct = value;
+                NotifyOfPropertyChange(() => SelectedIcedProduct);
+                NotifyOfPropertyChange(() => CanAddIcedProduct);
+            }
+        }
+
+        private DataRowView selectedDr;
+        public DataRowView SelectedDr
+        {
+            get { return selectedDr; }
+            set
+            {
+                selectedDr = value;
+                NotifyOfPropertyChange(() => SelectedDr);
+                NotifyOfPropertyChange(() => CanRemoveRow);
+            }
+        }
+
+        public bool CanRemoveRow
+        {
+            get
+            {
+                bool output = false;
+                if (SelectedDr != null)
+                {
+                    output = true;
+                }
+                return output;
+            }
+        }
+        public void RemoveRow()
+        {
+            //implement
+        }
+
+        private ProductModel selectedIceCream;
+
+        public ProductModel SelectedIceCream
+        {
+            get { return selectedIceCream; }
+            set
+            {
+                selectedIceCream = value;
+                NotifyOfPropertyChange(() => SelectedIceCream);
+                NotifyOfPropertyChange(() => CanAddIceCream);
+            }
+        }
+
+        public bool CanAddIceCream
+        {
+            get
+            {
+                bool output = false;
+                if (SelectedIceCream != null)
+                {
+                    output = true;
+                }
+                return output;
+            }
+        }
+        public void AddIceCream()
+        {
+            DataRow rowToAdd = invoiceDt.NewRow();
+            rowToAdd["Barkodas"] = SelectedIceCream.Barcode;
+            rowToAdd["Pavadinimas"] = SelectedIceCream.Name;
+            rowToAdd["Dėžės"] = "1";
+            rowToAdd["Kiekis"] = SelectedIceCream.AmountInBox;
+            rowToAdd["Kaina"] = SelectedIceCream.Price;
+            rowToAdd["Suma"] = $"{Convert.ToInt32(SelectedIceCream.AmountInBox) * Convert.ToDecimal(SelectedIceCream.Price)}";
+            rowToAdd["Nuolaida"] = "0";
+
+            InvoiceDt.Rows.Add(rowToAdd);
+            BuidIceCreamList();
+        }
+        public bool CanAddIcedProduct
+        {
+            get
+            {
+                bool output = false;
+                if (SelectedIcedProduct != null)
+                {
+                    output = true;
+                }
+                return output;
+            }
+        }
+        public void AddIcedProduct()
+        {
+            DataRow rowToAdd = invoiceDt.NewRow();
+            rowToAdd["Barkodas"] = SelectedIcedProduct.Barcode;
+            rowToAdd["Pavadinimas"] = SelectedIcedProduct.Name;
+            rowToAdd["Dėžės"] = "1";
+            rowToAdd["Kiekis"] = SelectedIcedProduct.AmountInBox;
+            rowToAdd["Kaina"] = SelectedIcedProduct.Price;
+            rowToAdd["Suma"] = $"{Convert.ToInt32(SelectedIcedProduct.AmountInBox) * Convert.ToDecimal(SelectedIcedProduct.Price)}";
+            rowToAdd["Nuolaida"] = "0";
+
+            InvoiceDt.Rows.Add(rowToAdd);
+            //BuidIceCreamList();
+            BuildIcedProductsList();
+        }
 
         public InvoiceViewModel()
         {
+
+            InitDataTable();
+            //selectedIceCream = new ProductModel(string.Empty, new CategoryModel() { Category = "----" }, string.Empty, string.Empty, string.Empty);
             ResetDate();
             BuildAllRegions();
-            BuidIcedProductsList();
+            BuildIcedProductsList();
             BuidIceCreamList();
             GetInvoiceData();
             GetAllStores();
+        }
 
+        public void InitDataTable()
+        {
+            invoiceDt = new DataTable();
+            invoiceDt.Clear();
+            invoiceDt.Columns.Add("Barkodas");
+            invoiceDt.Columns.Add("Pavadinimas");
+            invoiceDt.Columns.Add("Dėžės");
+            invoiceDt.Columns.Add("Kiekis");
+            invoiceDt.Columns.Add("Kaina");
+            invoiceDt.Columns.Add("Suma");
+            invoiceDt.Columns.Add("Nuolaida");
+            NotifyOfPropertyChange(()=> InvoiceDt);
         }
 
         private void GetInvoiceData()
