@@ -14,7 +14,8 @@ namespace LeduPasaulyjeData.Library
 {
     public class StoresDataAccess
     {
-        private readonly string storesJsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Stores.json");
+        //private readonly string storesJsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Stores.json");
+        readonly string storesJsonFilePath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\Stores.json"));
 
         public List<StoreModel> GetAllStores()
         {

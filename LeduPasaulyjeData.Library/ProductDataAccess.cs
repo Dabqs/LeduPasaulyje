@@ -14,12 +14,13 @@ namespace LeduPasaulyjeData.Library
 {
     public class ProductDataAccess
     {
-        private readonly string productsJsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Products.json");
+        //private readonly string productsJsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Products.json");
+        readonly string productsJsonFilePath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\Products.json"));
         public List<ProductModel> GetAllProducts()
         {
             if (!File.Exists(productsJsonFilePath))
             {
-                throw new FileNotFoundException($"Nepavyko rasti failo '{productsJsonFilePath}'. Jeigu failas egzistuoja, įsitikinkite, kad jo pavadinimas yra teisingas.");
+              throw new FileNotFoundException($"Nepavyko rasti failo '{productsJsonFilePath}'. Jeigu failas egzistuoja, įsitikinkite, kad jo pavadinimas yra teisingas.");
             }
             return JsonConvert.DeserializeObject<List<ProductModel>>(JsonHelpers.GetJsonString(productsJsonFilePath));
         }

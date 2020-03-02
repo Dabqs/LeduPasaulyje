@@ -26,6 +26,7 @@ namespace LeduPasaulyje.Views
             InitializeComponent();
         }
 
+        // TODO : implement more of these for the convenience of the user
         private void SelectedProduct_AmountInBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (e.KeyboardDevice.IsKeyDown(Key.Tab))

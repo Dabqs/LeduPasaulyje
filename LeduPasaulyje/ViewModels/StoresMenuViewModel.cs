@@ -269,7 +269,6 @@ namespace LeduPasaulyje.ViewModels
                 $"Adresas: {updatedStore.Address}");
         }
 
-
         public void DeleteStore()
         {
             if (MessageBox.Show("Ar tikrai norite panaikinti šią parduotuvę? Ji bus ištrinta iš sąrašo visiems laikams.", "DĖMESIO!", MessageBoxButton.YesNo,

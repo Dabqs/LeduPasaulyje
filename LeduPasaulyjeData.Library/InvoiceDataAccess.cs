@@ -11,9 +11,10 @@ using System.Threading.Tasks;
 
 namespace LeduPasaulyjeData.Library
 {
-    public class InvoiceDataAccess 
+    public class InvoiceDataAccess
     {
-        private readonly string invoiceNoJsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "InvoiceNumber.json");
+       // readonly string invoiceNoJsonFilePath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), InvoiceNumber.json"));
+        readonly string invoiceNoJsonFilePath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\InvoiceNumber.json"));
 
         public InvoiceModel GetInvoiceData()
         {

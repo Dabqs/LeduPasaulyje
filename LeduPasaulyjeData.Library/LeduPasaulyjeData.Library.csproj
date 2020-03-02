@@ -52,7 +52,6 @@
     <Compile Include="Models\InvoiceModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\RegionModel.cs" />
-    <Compile Include="Models\RegionsSelection.cs" />
     <Compile Include="Models\StoreModel.cs" />
     <Compile Include="ProductDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

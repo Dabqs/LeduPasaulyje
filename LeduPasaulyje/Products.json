@@ -1,0 +1,155 @@
+[
+  {
+    "Barcode": "",
+    "Name": "Pols sokoladinis",
+    "AmountInBox": "39",
+    "Price": "1,55",
+    "Categories": [
+      {
+        "Category": "Ledai"
+      },
+      {
+        "Category": "Šaldyti produktai"
+      }
+    ],
+    "SelectedCategory": {
+      "Category": "Ledai"
+    }
+  },
+  {
+    "Barcode": "1211115",
+    "Name": "Koldūnai",
+    "AmountInBox": "10",
+    "Price": "1,89",
+    "Categories": [
+      {
+        "Category": "Ledai"
+      },
+      {
+        "Category": "Šaldyti produktai"
+      }
+    ],
+    "SelectedCategory": {
+      "Category": "Šaldyti produktai"
+    }
+  },
+  {
+    "Barcode": "6955565561",
+    "Name": "Pols Karamelinis",
+    "AmountInBox": "39",
+    "Price": "0,48",
+    "Categories": [
+      {
+        "Category": "Ledai"
+      },
+      {
+        "Category": "Šaldyti produktai"
+      }
+    ],
+    "SelectedCategory": {
+      "Category": "Ledai"
+    }
+  },
+  {
+    "Barcode": "56888758458",
+    "Name": "Guliveris",
+    "AmountInBox": "30",
+    "Price": "0,59",
+    "Categories": [
+      {
+        "Category": "Ledai"
+      },
+      {
+        "Category": "Šaldyti produktai"
+      }
+    ],
+    "SelectedCategory": {
+      "Category": "Ledai"
+    }
+  },
+  {
+    "Barcode": "21321321654",
+    "Name": "Twist",
+    "AmountInBox": "34",
+    "Price": "0,89",
+    "Categories": [
+      {
+        "Category": "Ledai"
+      },
+      {
+        "Category": "Šaldyti produktai"
+      }
+    ],
+    "SelectedCategory": {
+      "Category": "Ledai"
+    }
+  },
+  {
+    "Barcode": "123610",
+    "Name": "Blyneliai",
+    "AmountInBox": "10",
+    "Price": "10,0",
+    "Categories": [
+      {
+        "Category": "Ledai"
+      },
+      {
+        "Category": "Šaldyti produktai"
+      }
+    ],
+    "SelectedCategory": {
+      "Category": "Šaldyti produktai"
+    }
+  },
+  {
+    "Barcode": "4164676797",
+    "Name": "Twist Aviečių",
+    "AmountInBox": "37",
+    "Price": "0,4",
+    "Categories": [
+      {
+        "Category": "Ledai"
+      },
+      {
+        "Category": "Šaldyti produktai"
+      }
+    ],
+    "SelectedCategory": {
+      "Category": "Ledai"
+    }
+  },
+  {
+    "Barcode": "26165448778745",
+    "Name": "Mini čeburekai",
+    "AmountInBox": "9",
+    "Price": "1,81",
+    "Categories": [
+      {
+        "Category": "Ledai"
+      },
+      {
+        "Category": "Šaldyti produktai"
+      }
+    ],
+    "SelectedCategory": {
+      "Category": "Šaldyti produktai"
+    }
+  },
+  {
+    "Barcode": "21321321654",
+    "Name": "Twist Citrinų",
+    "AmountInBox": "34",
+    "Price": "0,89",
+    "Categories": [
+      {
+        "Category": "Ledai"
+      },
+      {
+        "Category": "Šaldyti produktai"
+      }
+    ],
+    "SelectedCategory": {
+      "Category": "Ledai"
+    }
+  }
+]

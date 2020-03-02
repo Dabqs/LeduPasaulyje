@@ -12,7 +12,6 @@ namespace LeduPasaulyje.Models
     {
         //Choosing string because of the ease of entering values into TextBoxes (implemented custom validation)
         public string Barcode { get; set; }
-        // public string Category { get; set; }
         public string Name { get; set; }
         public string AmountInBox { get; set; }
         public string Price { get; set; }

@@ -1,0 +1,196 @@
+[
+  {
+    "Name": "Svaita",
+    "CompanyNumber": "2121254",
+    "VatNumber": "LT-3333650",
+    "Address": "Dusetų g 5, LT-55125, Zarasų r.",
+    "Regions": [
+      {
+        "Region": "Anykščiai",
+        "IsSelected": true
+      },
+      {
+        "Region": "Biržai",
+        "IsSelected": false
+      },
+      {
+        "Region": "Molėtai_Ignalina_Švenčionys",
+        "IsSelected": false
+      },
+      {
+        "Region": "Rokiškis",
+        "IsSelected": true
+      },
+      {
+        "Region": "Utena",
+        "IsSelected": true
+      },
+      {
+        "Region": "Zarasai",
+        "IsSelected": true
+      }
+    ]
+  },
+  {
+    "Name": "Pilanė",
+    "CompanyNumber": "1521547",
+    "VatNumber": "LT-15466546",
+    "Address": "Taikos g. 12, LT-32587, Aleksandravelė",
+    "Regions": [
+      {
+        "Region": "Anykščiai",
+        "IsSelected": false
+      },
+      {
+        "Region": "Biržai",
+        "IsSelected": false
+      },
+      {
+        "Region": "Molėtai_Ignalina_Švenčionys",
+        "IsSelected": false
+      },
+      {
+        "Region": "Rokiškis",
+        "IsSelected": true
+      },
+      {
+        "Region": "Utena",
+        "IsSelected": false
+      },
+      {
+        "Region": "Zarasai",
+        "IsSelected": false
+      }
+    ]
+  },
+  {
+    "Name": "UAB Darola",
+    "CompanyNumber": "599898984",
+    "VatNumber": "LT-599898984",
+    "Address": "Vilniaus g. 28, Rokiškis",
+    "Regions": [
+      {
+        "Region": "Anykščiai",
+        "IsSelected": true
+      },
+      {
+        "Region": "Biržai",
+        "IsSelected": false
+      },
+      {
+        "Region": "Molėtai_Ignalina_Švenčionys",
+        "IsSelected": false
+      },
+      {
+        "Region": "Rokiškis",
+        "IsSelected": true
+      },
+      {
+        "Region": "Utena",
+        "IsSelected": true
+      },
+      {
+        "Region": "Zarasai",
+        "IsSelected": false
+      }
+    ]
+  },
+  {
+    "Name": "Puntukas",
+    "CompanyNumber": "111",
+    "VatNumber": "LT-45465465",
+    "Address": "Anykščių r.",
+    "Regions": [
+      {
+        "Region": "Anykščiai",
+        "IsSelected": true
+      },
+      {
+        "Region": "Biržai",
+        "IsSelected": false
+      },
+      {
+        "Region": "Molėtai_Ignalina_Švenčionys",
+        "IsSelected": false
+      },
+      {
+        "Region": "Rokiškis",
+        "IsSelected": false
+      },
+      {
+        "Region": "Utena",
+        "IsSelected": false
+      },
+      {
+        "Region": "Zarasai",
+        "IsSelected": false
+      }
+    ]
+  },
+  {
+    "Name": "Akropolis",
+    "CompanyNumber": "302533135",
+    "VatNumber": "LT100005549015",
+    "Address": "Ozo g. 25, LT-07150 Vilnius",
+    "Regions": [
+      {
+        "Region": "Anykščiai",
+        "IsSelected": false
+      },
+      {
+        "Region": "Biržai",
+        "IsSelected": false
+      },
+      {
+        "Region": "Molėtai_Ignalina_Švenčionys",
+        "IsSelected": true
+      },
+      {
+        "Region": "Rokiškis",
+        "IsSelected": false
+      },
+      {
+        "Region": "Utena",
+        "IsSelected": false
+      },
+      {
+        "Region": "Zarasai",
+        "IsSelected": false
+      }
+    ],
+    "StoreInfo": "Akropolis\n302533135 / LT100005549015 \nOzo g. 25, LT-07150 Vilnius"
+  },
+  {
+    "Name": "Mega",
+    "CompanyNumber": "111621714",
+    "VatNumber": "LT116217113",
+    "Address": "Garažų g. 18, LT-51120 Kaunas",
+    "Regions": [
+      {
+        "Region": "Anykščiai",
+        "IsSelected": false
+      },
+      {
+        "Region": "Biržai",
+        "IsSelected": true
+      },
+      {
+        "Region": "Molėtai_Ignalina_Švenčionys",
+        "IsSelected": false
+      },
+      {
+        "Region": "Rokiškis",
+        "IsSelected": false
+      },
+      {
+        "Region": "Utena",
+        "IsSelected": false
+      },
+      {
+        "Region": "Zarasai",
+        "IsSelected": false
+      }
+    ],
+    "StoreInfo": "Mega\n111621714 / LT116217113 \nGaražų g. 18, LT-51120 Kaunas"
+  }
+]

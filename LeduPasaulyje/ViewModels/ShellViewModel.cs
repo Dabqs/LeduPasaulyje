@@ -11,7 +11,6 @@ namespace LeduPasaulyje.ViewModels
 {
    public class ShellViewModel : Conductor<object>
     {
-        //public BindableCollection<ProductModel> Products { get; set; }
         private InvoiceViewModel invoiceViewModel;
         private ProductsMenuViewModel productsMenuViewModel;
         private StoresMenuViewModel storesMenuViewModel;

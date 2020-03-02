@@ -318,7 +318,6 @@ namespace LeduPasaulyje.ViewModels
             rowToAdd["Nuolaida"] = "0";
 
             InvoiceDt.Rows.Add(rowToAdd);
-            //BuidIceCreamList();
             BuildIcedProductsList();
         }
 
@@ -326,7 +325,6 @@ namespace LeduPasaulyje.ViewModels
         {
 
             InitDataTable();
-            //selectedIceCream = new ProductModel(string.Empty, new CategoryModel() { Category = "----" }, string.Empty, string.Empty, string.Empty);
             ResetDate();
             BuildAllRegions();
             BuildIcedProductsList();
