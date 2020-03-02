@@ -5,9 +5,11 @@ using LeduPasaulyjeData.Library.Enums;
 using LeduPasaulyjeData.Library.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace LeduPasaulyje.ViewModels
 {
@@ -84,7 +86,7 @@ namespace LeduPasaulyje.ViewModels
         public void Print()
         {
             invoiceDataAccess.UpdateInvoiceData();
-            InvoiceNumberData = invoiceDataAccess.GetInvoiceData();
+            GetInvoiceData();
 
         }
 
@@ -119,7 +121,19 @@ namespace LeduPasaulyje.ViewModels
             BuildAllRegions();
             BuidIcedProductsList();
             BuidIceCreamList();
-            InvoiceNumberData = invoiceDataAccess.GetInvoiceData();
+            GetInvoiceData();
+        }
+
+        private void GetInvoiceData()
+        {
+            try
+            {
+                InvoiceNumberData = invoiceDataAccess.GetInvoiceData();
+            }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show("Nepavyko aptikti paskutinio sąskaitos numerio. " + ex.Message);
+            }
         }
 
     }

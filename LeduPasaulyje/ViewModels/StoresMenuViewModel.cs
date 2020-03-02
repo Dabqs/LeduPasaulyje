@@ -6,6 +6,7 @@ using LeduPasaulyjeData.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -146,7 +147,7 @@ namespace LeduPasaulyje.ViewModels
                         SelectedRegions.Add(region);
                     }
                 }
-                
+
                 NotifyOfPropertyChange(() => SelectedStore);
                 NotifyOfPropertyChange(() => SelectedRegions);
                 BuildExistingRegions();
@@ -176,13 +177,20 @@ namespace LeduPasaulyje.ViewModels
         private void GetStores()
         {
             Stores = new BindableCollection<StoreModel>();
-            foreach (StoreModel store in storesDataAccess.GetAllStores().OrderBy(st => st.Name))
+            try
             {
-                Stores.Add(store);
+                foreach (StoreModel store in storesDataAccess.GetAllStores().OrderBy(st => st.Name))
+                {
+                    Stores.Add(store);
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show("Nepavyko užkrauti parduotuvių sąrašo. " + ex.Message);
             }
         }
 
-        
+
         public void ReloadSelectedStore()
         {
             List<RegionModel> updatedRegions = new List<RegionModel>();
@@ -235,7 +243,7 @@ namespace LeduPasaulyje.ViewModels
             try
             {
                 updatedStore = storesDataAccess.ValidateDataEntry(SelectedStore);
-            
+
             }
             catch (ArgumentException ex)
             {

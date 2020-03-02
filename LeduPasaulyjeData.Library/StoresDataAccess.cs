@@ -18,6 +18,10 @@ namespace LeduPasaulyjeData.Library
 
         public List<StoreModel> GetAllStores()
         {
+            if (!File.Exists(storesJsonFilePath))
+            {
+                throw new FileNotFoundException($"Nepavyko rasti failo '{storesJsonFilePath}'. Jeigu failas egzistuoja, įsitikinkite, kad jo pavadinimas yra teisingas.");
+            }
             return JsonConvert.DeserializeObject<List<StoreModel>>(JsonHelpers.GetJsonString(storesJsonFilePath));
         }
 

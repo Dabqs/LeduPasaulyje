@@ -5,6 +5,7 @@ using LeduPasaulyjeData.Library;
 using LeduPasaulyjeData.Library.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace LeduPasaulyje.ViewModels
                 selectedProduct = value;
                 if (value != null)
                 {
-                SelectedCategorien = value.SelectedCategory;
+                    SelectedCategorien = value.SelectedCategory;
                 }
                 NotifyOfPropertyChange(() => SelectedProduct);
 
@@ -60,9 +61,17 @@ namespace LeduPasaulyje.ViewModels
         private void GetProducts()
         {
             Products = new BindableCollection<ProductModel>();
-            foreach (ProductModel item in productDataAccess.GetAllProducts().OrderBy(p => p.Name))
+
+            try
             {
-                products.Add(item);
+                foreach (ProductModel item in productDataAccess.GetAllProducts().OrderBy(p => p.Name))
+                {
+                    products.Add(item);
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show("Nepavyko užkrauti produktų sąrašo. " + ex.Message);
             }
         }
 
@@ -73,7 +82,7 @@ namespace LeduPasaulyje.ViewModels
 
             try
             {
-            updatedProduct = productDataAccess.ValidateDataEntry(SelectedProduct);
+                updatedProduct = productDataAccess.ValidateDataEntry(SelectedProduct);
 
             }
             catch (ArgumentException ex)
@@ -81,7 +90,7 @@ namespace LeduPasaulyje.ViewModels
                 MessageBox.Show(ex.Message);
                 return;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Įvyko netikėta klaida. Klaidos tekstas:'{ex.Message}'");
                 return;
@@ -103,7 +112,7 @@ namespace LeduPasaulyje.ViewModels
             selectedProduct = null;
             Products = null;
             Products = tempProducts;
-            SelectedProduct = new ProductModel(string.Empty, new CategoryModel() {Category = "--------" }, string.Empty, string.Empty, string.Empty);
+            SelectedProduct = new ProductModel(string.Empty, new CategoryModel() { Category = "--------" }, string.Empty, string.Empty, string.Empty);
         }
         public NullifyObjectCommand NullifySelectedProduct { get; private set; }
 

@@ -17,6 +17,10 @@ namespace LeduPasaulyjeData.Library
 
         public InvoiceModel GetInvoiceData()
         {
+            if (!File.Exists(invoiceNoJsonFilePath))
+            {
+                throw new FileNotFoundException($"Nepavyko rasti failo '{invoiceNoJsonFilePath}'. Jeigu failas egzistuoja, įsitikinkite, kad jo pavadinimas yra teisingas.");
+            }
             return JsonConvert.DeserializeObject<InvoiceModel>(JsonHelpers.GetJsonString(invoiceNoJsonFilePath));
         }
         public void UpdateInvoiceData()
