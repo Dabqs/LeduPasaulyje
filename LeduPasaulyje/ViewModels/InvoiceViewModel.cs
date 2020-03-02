@@ -26,12 +26,84 @@ namespace LeduPasaulyje.ViewModels
             }
         }
 
+        private BindableCollection<StoreModel> allStores;
+
+        public BindableCollection<StoreModel> AllStores
+        {
+            get { return allStores; }
+            set { allStores = value;
+                NotifyOfPropertyChange(() => AllStores);
+            }
+        }
+        public void GetAllStores()
+        {
+            AllStores = new BindableCollection<StoreModel>();
+
+            foreach (StoreModel store in storesDataAccess.GetAllStores())
+            {
+                AllStores.Add(store);
+            }
+
+        }
+
+
+        private BindableCollection<StoreModel> filteredStoresList;
+
+        public BindableCollection<StoreModel> FilteredStoresList
+        {
+            get { return filteredStoresList; }
+            set
+            {
+                filteredStoresList = GetFilteredStores();
+                NotifyOfPropertyChange(() => FilteredStoresList);
+            }
+        }
+
+        private StoreModel selectedStore;
+
+        public StoreModel SelectedStore
+        {
+            get { return selectedStore; }
+            set { selectedStore = value;
+                NotifyOfPropertyChange(() => SelectedStore);
+            }
+        }
+
+
         private InvoiceDataAccess invoiceDataAccess = new InvoiceDataAccess();
         private ProductDataAccess productDataAccess = new ProductDataAccess();
         private StoresDataAccess storesDataAccess = new StoresDataAccess();
 
-        private BindableCollection<ProductModel> iceCreamList;
+        private string selectedRegionName;
 
+        public string SelectedRegionName
+        {
+            get { return selectedRegionName; }
+            set
+            {
+                selectedRegionName = value;
+                FilteredStoresList = GetFilteredStores();
+                NotifyOfPropertyChange(() => FilteredStoresList);
+                NotifyOfPropertyChange(() => SelectedRegionName);
+            }
+        }
+
+        private BindableCollection<StoreModel> GetFilteredStores()
+        {
+            BindableCollection<StoreModel> filteredBySelectedRegion = new BindableCollection<StoreModel>();
+
+            foreach (StoreModel storeModel in AllStores)
+            {
+                if (storeModel.Regions.Any(s => s.Region == SelectedRegionName && s.IsSelected))
+                {
+                    filteredBySelectedRegion.Add(storeModel);
+                }
+            }
+            return filteredBySelectedRegion;
+        }
+
+
+        private BindableCollection<ProductModel> iceCreamList;
         public BindableCollection<ProductModel> IceCreamList
         {
             get { return iceCreamList; }
@@ -85,6 +157,10 @@ namespace LeduPasaulyje.ViewModels
 
         public void Print()
         {
+            if (SelectedStore == null)
+            {
+                MessageBox.Show("Pasirinkite parduotuvę.");
+            }
             invoiceDataAccess.UpdateInvoiceData();
             GetInvoiceData();
 
@@ -103,6 +179,7 @@ namespace LeduPasaulyje.ViewModels
             set
             {
                 allRegions = value;
+
                 NotifyOfPropertyChange(() => AllRegions);
             }
         }
@@ -122,6 +199,8 @@ namespace LeduPasaulyje.ViewModels
             BuidIcedProductsList();
             BuidIceCreamList();
             GetInvoiceData();
+            GetAllStores();
+
         }
 
         private void GetInvoiceData()

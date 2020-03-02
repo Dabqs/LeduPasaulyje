@@ -16,6 +16,16 @@ namespace LeduPasaulyjeData.Library.Models
         public List<RegionModel> Regions { get; set; } = new List<RegionModel>();
         private List<string> availableRegions = new List<string>();
 
+        public string StoreInfo
+        {
+            get
+            {
+                string companyNumbersInfo = String.IsNullOrWhiteSpace(VatNumber) ? CompanyNumber : CompanyNumber + " / " + VatNumber;
+                return $"{Name}\n" +
+                    $"{companyNumbersInfo} \n" +
+                    $"{Address}";
+            }
+        }
 
         public StoreModel(string name, string companyNumber, string vatNumber, string address, List<RegionModel> regions)
         {
@@ -34,7 +44,7 @@ namespace LeduPasaulyjeData.Library.Models
                 VatNumber.Trim().ToLower() == other.VatNumber.Trim().ToLower() &&
                 Address.Trim().ToLower() == other.Address.Trim().ToLower() &&
                 Regions.Equals(other.Regions);
-                
+
 
             //if (isEqual)
             //{
